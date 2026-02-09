@@ -17,7 +17,7 @@ The system extracts historical market data and risk indices, transforms them usi
 ## Project Structure
 The repository is organized into three main directories, reflecting the data flow:
 
-```text
+text
 ├── etl/                   # Informatica mappings and transformation logic
 ├── design_star_schema/    # Data modeling diagrams and SQL definitions
 └── dashboard/             # Visualization files and output reports
