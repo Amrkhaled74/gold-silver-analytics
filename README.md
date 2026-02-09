@@ -10,27 +10,28 @@ The system extracts historical market data and risk indices, transforms them usi
 2. [ETL Process](#-etl-process)
 3. [Star Schema Design](#-star-schema-design)
 4. [Dashboard](#-dashboard)
-5. [Prerequisites & Setup](#-prerequisites--setup)
+
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 The repository is organized into three main directories, reflecting the data flow:
 
 ```text
 ├── etl/                   # Informatica mappings and transformation logic
 ├── design_star_schema/    # Data modeling diagrams and SQL definitions
 └── dashboard/             # Visualization files and output reports
-ETL Process
+## ETL Process
+
 Folder: etl/
 
 The ETL (Extract, Transform, Load) logic is built using Informatica PowerCenter. The workflows ingest raw CSV/Flat files and load them into the Data Warehouse.
 
-Key Mappings & Logic:
+Key Mappings & Logic
 1. Date Dimension Load
 Source: Gold_Spot_Price_Daily
 
-Logic: Extracts distinct dates from the transaction history.
+Logic: Extracts distinct dates from the transaction history to build a master calendar.
 
 Transformations:
 
@@ -67,7 +68,9 @@ Expression: Calculates IMPACT_ON_GOLD and IMPACT_ON_SILVER (derived from price c
 Filter: Ensures only significant events are loaded.
 
 Target: DIM_EVENT table.
-Star Schema Design
+
+## Star Schema Design
+
 Folder: design_star_schema/
 
 The data model is a classic Star Schema optimized for analytical queries. It centers around a Fact table containing daily market metrics, surrounded by descriptive dimensions.
@@ -90,10 +93,10 @@ DIM_GEOPOLITICALRISK,Categorization of risk sources.,"Risk_Type, Risk_Source"
 DIM_EVENT,Specific market events and their calculated impact.,"Event_Type, Impact_on_Gold, Impact_on_Silver"
 DIM_ASSET,Lookup for asset types.,Asset_Type
 
-Dashboard
+## Dashboard
 Folder: dashboard/
 
-The dashboard utilizes the Star Schema to visualize trends.
+The dashboard utilizes the Star Schema to visualize trends and correlations.
 
 Key Insights:
 
@@ -102,3 +105,6 @@ Price Correlation: Visualizing how Gold/Silver prices react on days with high Ge
 Event Impact: Analyzing specific "Event Types" (from DIM_EVENT) to see if they historically drive prices up (safe-haven behavior) or down.
 
 Volatility Tracking: Monitoring GOLD_CHANGE and SILVER_CHANGE over time.
+
+
+
