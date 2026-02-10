@@ -1,110 +1,233 @@
-# Geopolitical Risk & Precious Metals Data Warehouse
+# 🌍 Geopolitical Risk & Precious Metals Data Warehouse
 
-## 📖 Project Overview
-This project is an end-to-end Business Intelligence solution designed to analyze the correlation between **Geopolitical Risks (GPRD)** and **Precious Metal Prices (Gold & Silver)**.
+## 📌 Project Overview
 
-The system extracts historical market data and risk indices, transforms them using **Informatica PowerCenter**, organizes them into a **Star Schema**, and prepares the data for dashboard visualization to assess market impacts.
+This project is a complete **end-to-end Business Intelligence (BI) and Data Warehousing solution** designed to analyze the relationship between **geopolitical risk** and **precious metal market behavior** (Gold & Silver).
 
-## 📑 Table of Contents
-1. [Project Structure](#-project-structure)
-2. [ETL Process](#-etl-process)
-3. [Star Schema Design](#-star-schema-design)
-4. [Dashboard](#-dashboard)
+The system integrates historical **Geopolitical Risk Data (GPRD)** with **financial market prices**, processes them through a structured **ETL pipeline built in Informatica PowerCenter**, models the data using a **Star Schema**, and prepares it for **analytics dashboards and decision support systems**.
 
+The main objective is to enable data-driven insights into how geopolitical instability influences safe-haven assets such as gold and silver.
 
 ---
 
-## Project Structure
-The repository is organized into three main directories, reflecting the data flow:
+## 🧠 Business & Analytical Objectives
+
+* Analyze correlation between geopolitical risk and precious metal prices
+* Identify **safe-haven behavior** during high-risk periods
+* Track volatility patterns in gold and silver markets
+* Detect historical market reactions to geopolitical events
+* Enable fast analytical queries for BI dashboards
+
+---
+
+## 🗂️ Project Structure
 
 ```text
-├── etl/                   # Informatica mappings and transformation logic
-├── design_star_schema/    # Data modeling diagrams and SQL definitions
-└── dashboard/             # Visualization files and output reports
-## ETL Process
+├── etl/                    # Informatica PowerCenter mappings, workflows, transformations
+├── design_star_schema/     # Data warehouse schema, ER diagrams, SQL DDL
+└── dashboard/              # BI dashboards, visualizations, analytical reports
+```
 
-Folder: etl/
+Each layer reflects a standard enterprise data architecture:
 
-The ETL (Extract, Transform, Load) logic is built using Informatica PowerCenter. The workflows ingest raw CSV/Flat files and load them into the Data Warehouse.
+* **ETL Layer** → Data ingestion and transformation
+* **Warehouse Layer** → Dimensional modeling (Star Schema)
+* **Analytics Layer** → BI dashboards and reporting
 
-Key Mappings & Logic
-1. Date Dimension Load
-Source: Gold_Spot_Price_Daily
+---
 
-Logic: Extracts distinct dates from the transaction history to build a master calendar.
+## 🔄 ETL Process (Informatica PowerCenter)
 
-Transformations:
+**Folder:** `etl/`
 
-Expression (EXPTRANS): Parses Year, Month, Day, Quarter, and Half_Year.
+The ETL layer is responsible for extracting raw data from flat files (CSV), transforming it into structured business entities, and loading it into the Data Warehouse.
 
-Sequence Generator (SEQTRANS): Generates the surrogate primary key Date_Id.
+### 🔹 Data Sources
 
-Target: DIM_DATE table.
+* `Gold_Spot_Price_Daily`
+* `Silver_Spot_Price_Daily`
+* `Geopolitical_Risk_Index`
 
-2. Geopolitical Risk Dimension Load
-Source: Geopolitical_Risk_Index
+---
 
-Logic: Standardizes risk categories.
+### 1️⃣ Date Dimension Load (`DIM_DATE`)
 
-Transformations:
+**Source:** `Gold_Spot_Price_Daily`
 
-Sorter (SRTTRANS): Sorts data by Risk Category and Source for aggregation.
+**Purpose:** Build a centralized time dimension for analytical consistency.
 
-Expression: Classifies risks based on GPRD (General), GPRD_ACT (Actual Acts), and GPRD_THREAT (Threats).
+**Transformations:**
 
-Target: DIM_GEOPOLITICALRISK table.
+* `EXPTRANS (Expression)` → Extracts: Year, Month, Day, Quarter, Half_Year
+* `SEQTRANS (Sequence Generator)` → Generates surrogate key `DATE_ID`
 
-3. Event Dimension Load (Complex Logic)
-Source: Joins data from Silver_Spot_Price, Gold_Spot_Price, and Geopolitical_Risk_Index.
+**Target:** `DIM_DATE`
 
-Logic: Identifies specific market events and calculates their immediate impact on asset prices.
+---
 
-Transformations:
+### 2️⃣ Geopolitical Risk Dimension Load (`DIM_GEOPOLITICALRISK`)
 
-Joiner (JNRTRANS): Combines Gold and Silver data with Risk data based on dates.
+**Source:** `Geopolitical_Risk_Index`
 
-Expression: Calculates IMPACT_ON_GOLD and IMPACT_ON_SILVER (derived from price changes during high-risk events).
+**Purpose:** Standardize and classify geopolitical risk types.
 
-Filter: Ensures only significant events are loaded.
+**Transformations:**
 
-Target: DIM_EVENT table.
+* `SRTTRANS (Sorter)` → Sorting by Risk Category & Source
+* `EXPTRANS (Expression)` → Risk classification:
 
-## Star Schema Design
+  * `GPRD` → General Risk Index
+  * `GPRD_ACT` → Actual geopolitical acts
+  * `GPRD_THREAT` → Threat-based risks
 
-Folder: design_star_schema/
+**Target:** `DIM_GEOPOLITICALRISK`
 
-The data model is a classic Star Schema optimized for analytical queries. It centers around a Fact table containing daily market metrics, surrounded by descriptive dimensions.
+---
 
-Fact Table: Tax_Driver_table
-This is the central table containing the daily performance metrics.
+### 3️⃣ Event Dimension Load (`DIM_EVENT`) — *Advanced Logic*
 
-Foreign Keys: DATE_ID, EVENT_ID, RISK_ID, ASSET_ID
+**Sources:**
 
-Metrics:
+* `Gold_Spot_Price`
+* `Silver_Spot_Price`
+* `Geopolitical_Risk_Index`
 
-Gold: GOLD_CLOSE, GOLD_OPEN, GOLD_HIGH, GOLD_LOW, GOLD_CHANGE
+**Purpose:** Detect meaningful market events and quantify their financial impact.
 
-Silver: SILVER_CLOSE, SILVER_OPEN, SILVER_HIGH, SILVER_LOW, SILVER_CHANGE
+**Transformations:**
 
-Risk Indices: GPRD, GPRD_ACT, GPRD_THREAT
-Table Name,Description,Key Attributes
-DIM_DATE,Calendar attributes for time-series analysis.,"Year, Month, Quarter, Half_Year"
-DIM_GEOPOLITICALRISK,Categorization of risk sources.,"Risk_Type, Risk_Source"
-DIM_EVENT,Specific market events and their calculated impact.,"Event_Type, Impact_on_Gold, Impact_on_Silver"
-DIM_ASSET,Lookup for asset types.,Asset_Type
+* `JNRTRANS (Joiner)` → Join datasets by Date
+* `EXPTRANS (Expression)` → Calculate:
 
-## Dashboard
-Folder: dashboard/
+  * `IMPACT_ON_GOLD`
+  * `IMPACT_ON_SILVER`
+* `FILTER` → Load only **significant geopolitical events**
 
-The dashboard utilizes the Star Schema to visualize trends and correlations.
+**Target:** `DIM_EVENT`
 
-Key Insights:
+---
 
-Price Correlation: Visualizing how Gold/Silver prices react on days with high Geopolitical Risk (GPRD) scores.
+## ⭐ Star Schema Design
 
-Event Impact: Analyzing specific "Event Types" (from DIM_EVENT) to see if they historically drive prices up (safe-haven behavior) or down.
+**Folder:** `design_star_schema/`
 
-Volatility Tracking: Monitoring GOLD_CHANGE and SILVER_CHANGE over time.
+The warehouse uses a **classic Star Schema** optimized for:
 
+* High-performance analytical queries
+* BI tools
+* Aggregations
+* Time-series analysis
 
+### 🧩 Fact Table
 
+**Table:** `FACT_MARKET`
+
+**Foreign Keys:**
+
+* `DATE_ID`
+* `EVENT_ID`
+* `RISK_ID`
+* `ASSET_ID`
+
+**Measures:**
+
+**Gold Metrics:**
+
+* `GOLD_OPEN`
+* `GOLD_CLOSE`
+* `GOLD_HIGH`
+* `GOLD_LOW`
+* `GOLD_CHANGE`
+
+**Silver Metrics:**
+
+* `SILVER_OPEN`
+* `SILVER_CLOSE`
+* `SILVER_HIGH`
+* `SILVER_LOW`
+* `SILVER_CHANGE`
+
+**Risk Metrics:**
+
+* `GPRD`
+* `GPRD_ACT`
+* `GPRD_THREAT`
+
+---
+
+### 🗃️ Dimension Tables
+
+| Table Name             | Description                 | Key Attributes                               |
+| ---------------------- | --------------------------- | -------------------------------------------- |
+| `DIM_DATE`             | Time intelligence dimension | Year, Month, Quarter, Half_Year              |
+| `DIM_GEOPOLITICALRISK` | Risk classification         | Risk_Type, Risk_Source                       |
+| `DIM_EVENT`            | Market events & impacts     | Event_Type, Impact_on_Gold, Impact_on_Silver |
+| `DIM_ASSET`            | Asset lookup                | Asset_Type                                   |
+
+---
+
+## 📊 Dashboard & Analytics Layer
+
+**Folder:** `dashboard/`
+
+The dashboard layer connects directly to the Star Schema and enables advanced analytics.
+
+### 🔍 Analytical Use Cases
+
+* 📈 **Price Correlation Analysis**
+  Relationship between **GPRD levels** and gold/silver price movements
+
+* 🛡️ **Safe-Haven Behavior Detection**
+  Identify periods where gold/silver rise during geopolitical instability
+
+* ⚡ **Event Impact Analysis**
+  Measure market reaction to different event types
+
+* 🌊 **Volatility Monitoring**
+  Track `GOLD_CHANGE` and `SILVER_CHANGE` over time
+
+---
+
+## 🏗️ Architecture Summary
+
+```text
+Raw Data Sources
+      ↓
+ETL (Informatica PowerCenter)
+      ↓
+Staging Layer
+      ↓
+Star Schema Data Warehouse
+      ↓
+BI Dashboards
+      ↓
+Business Insights & Decision Support
+```
+
+---
+
+## 🎯 Project Value
+
+This project demonstrates:
+
+* Enterprise-grade ETL design
+* Dimensional modeling expertise
+* Business Intelligence architecture
+* Analytical thinking
+* Financial + geopolitical domain integration
+* Data engineering best practices
+
+---
+
+## 🚀 Future Enhancements
+
+* Real-time streaming ingestion (Kafka)
+* Predictive modeling (ML risk forecasting)
+* Sentiment analysis integration (news & social media)
+* API-based live market feeds
+* Automated anomaly detection
+
+---
+
+📌 **This repository represents a full BI lifecycle:**
+Data Engineering → Data Modeling → Data Warehousing → Analytics → Business Intelligence
