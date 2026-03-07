@@ -12,7 +12,7 @@ The pipeline enables analysts to evaluate how **political tensions, military thr
 ## Table of Contents
 1. [Project Structure](#-Project-Structure)
 2. [ETL Process](#-ETL-Process)
-3. [Star Schema Design](#-Star-Schema-Design)
+3. [Star Schema Design](#-Star-Schema-Design) 
 4. [Technical Challenges](#-Technical-Challenges)
 5. [Use Cases](#-Use-Cases)
  
@@ -108,7 +108,7 @@ Target: **DIM_EVENT**
 
 ---
 
-## Star Schema Design
+## Star Schema Design  
 
 Folder: **design_star_schema/**
 
@@ -161,7 +161,7 @@ Metrics:
 | **DIM_ASSET** | Lookup table for asset types | Asset_Type |
 ---
 
-## Technical Challenges
+## Technical Challenges 
 
 ### 1. Date Format Standardization
 Problem:  
