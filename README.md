@@ -190,7 +190,7 @@ The **Index Cache** and **Data Cache** sizes were increased within **Workflow Ma
 
 ---
 
-## use cases  
+## Use Cases  
 
 ### Market Sentiment Analysis
 Analyze how **high geopolitical risk levels** correlate with **Gold price spikes**, demonstrating safe-haven asset behavior.
