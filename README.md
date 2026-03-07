@@ -29,7 +29,7 @@ The repository is organized into directories that represent the main stages of t
 
 ---
 
-# ETL Process
+## ETL Process
 
 Folder: **etl/**
 
@@ -108,7 +108,7 @@ Target: **DIM_EVENT**
 
 ---
 
-# Star Schema Design
+## Star Schema Design
 
 Folder: **design_star_schema/**
 
@@ -161,7 +161,7 @@ Metrics:
 | **DIM_ASSET** | Lookup table for asset types | Asset_Type |
 ---
 
-# Technical Challenges
+## Technical Challenges
 
 ### 1. Date Format Standardization
 Problem:  
@@ -190,7 +190,7 @@ The **Index Cache** and **Data Cache** sizes were increased within **Workflow Ma
 
 ---
 
-# Use Cases
+## Use Cases
 
 ### Market Sentiment Analysis
 Analyze how **high geopolitical risk levels** correlate with **Gold price spikes**, demonstrating safe-haven asset behavior.
