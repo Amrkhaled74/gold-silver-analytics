@@ -10,11 +10,11 @@ The pipeline enables analysts to evaluate how **political tensions, military thr
 ---
 
 ## Table of Contents
-1. [Project Structure](#-Project-Structure)
-2. [ETL Process](#-ETL-Process)
-3. [Star Schema Design](#-Star-Schema-Design) 
-4. [Technical Challenges](#-Technical-Challenges)
-5. [Use Cases](#-Use-Cases)
+1. [Project Structure](##-Project-Structure)
+2. [ETL Process](##-ETL-Process)
+3. [Star Schema Design](##-Star-Schema-Design) 
+4. [Technical Challenges](##-Technical-Challenges)
+5. [Use Cases](##-Use-Cases)
  
 ---
 
