@@ -14,7 +14,7 @@ The pipeline enables analysts to evaluate how **political tensions, military thr
 2. [ETL Process](#-ETL-Process)
 3. [Star Schema Design](#-Star-Schema-Design) 
 4. [Technical Challenges](#-Technical-Challenges)
-5. [Use Cases](#-Use-Cases)
+5. [Use Cases](#-use-cases)
  
 ---
 
@@ -190,7 +190,7 @@ The **Index Cache** and **Data Cache** sizes were increased within **Workflow Ma
 
 ---
 
-## Use Cases  
+## use cases  
 
 ### Market Sentiment Analysis
 Analyze how **high geopolitical risk levels** correlate with **Gold price spikes**, demonstrating safe-haven asset behavior.
