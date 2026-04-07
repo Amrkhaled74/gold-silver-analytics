@@ -40,7 +40,7 @@ The core hypothesis is measurable: **when geopolitical risk rises, safe-haven as
 ```
 Raw Sources                   Informatica PowerCenter              SQL Server DWH         Power BI
 ─────────────                 ────────────────────────             ──────────────         ────────
-Gold_Spot_Price_Daily   ─────►  Cleanse → Transform → Load  ─────►  Star Schema    ─────►  Dashboard
+Gold_Spot_Price_Daily   ─────►  Cleanse → Transform → Load  ─────►  Galaxy Schema    ─────►  Dashboard
 Silver_Spot_Price       ─────►  Joiner / Expression / Filter ─────►  Fact + Dims   ─────►  KPIs & Charts
 Geopolitical_Risk_Index ─────►  Sorter / Sequence Generator  ─────►  FACT_ASSET    ─────►  Trend Analysis
 ```
@@ -143,7 +143,7 @@ The analytical layer is delivered as an interactive **Power BI dashboard** title
 
 ### Dashboard Screenshot
 
-![Power BI Dashboard](./dashboard/GOLD_PERFORMANCE.jpg)
+![Power BI Dashboard](./Dashboard/GOLD_PERFORMANCE.jpg)
 
 > *Filtered view: Gold performance, Q1 2022, Month 2. Toggle between GOLD and SILVER assets using the top-right selector.*
 
