@@ -3,7 +3,7 @@
 - [Project Overview](#project-overview)
   - [What This Project Solves](#what-this-project-solves)
   - [Pipeline Flow](#pipeline-flow)
-- [Data Architecture & Star Schema](#data-architecture--star-schema)
+- [Data Architecture & Galaxy Schema](#data-architecture--Galaxy-schema)
   - [Schema Diagram](#schema-diagram)
   - [Fact Tables](#fact-tables)
     - [FACT\_ASSET\_PRICE — Core Daily Metrics](#fact_asset_price--core-daily-metrics)
@@ -47,9 +47,9 @@ Geopolitical_Risk_Index ─────►  Sorter / Sequence Generator  ──�
 
 ---
 
-## Data Architecture & Star Schema
+## Data Architecture & Galaxy Schema
 
-The warehouse follows a **Star Schema** design — optimized for OLAP workloads, BI tool compatibility, and dimensional drill-down queries.
+The warehouse follows a **Galaxy Schema** design — optimized for OLAP workloads, BI tool compatibility, and dimensional drill-down queries.
 
 ### Schema Diagram
 
@@ -143,7 +143,7 @@ The analytical layer is delivered as an interactive **Power BI dashboard** title
 
 ### Dashboard Screenshot
 
-![Power BI Dashboard](./Dashboard/GOLD_PERFORMANCE.jpg)
+![Power BI Dashboard](./Dashboard/GOLD PERFORMANCE.jpg)
 
 > *Filtered view: Gold performance, Q1 2022, Month 2. Toggle between GOLD and SILVER assets using the top-right selector.*
 
@@ -227,7 +227,7 @@ Based on the data modeled and visualized through this pipeline:
 | **ETL Orchestration** | Informatica PowerCenter (Mapping Designer, Workflow Manager) |
 | **Transformations** | Source Qualifier, Expression, Joiner, Sorter, Filter, Router, Lookup, Union, Sequence Generator |
 | **Data Warehouse** | Microsoft SQL Server |
-| **Data Model** | Star Schema (Dimensional Modeling) |
+| **Data Model** | Galaxy Schema (Dimensional Modeling) |
 | **BI & Visualization** | Microsoft Power BI |
 | **Schema Design** | Entity-Relationship Diagrams (ERD) |
 
@@ -252,7 +252,7 @@ Based on the data modeled and visualized through this pipeline:
 
 ## Getting Started
 
-1. **Provision the Database** — Run the DDL scripts in `design_Galaxy_Schema/schema_ddl.sql` against your SQL Server instance to create the star schema.
+1. **Provision the Database** — Run the DDL scripts in `design_Galaxy_Schema/schema_ddl.sql` against your SQL Server instance to create the Galaxy schema.
 2. **Configure Informatica** — Import the mapping XMLs from `etl/` into your PowerCenter repository and update source/target connection objects.
 3. **Run Workflows** — Execute mappings in order: Date Dim → Geopolitical Risk Dim → Event Dim → Fact Load.
 4. **Connect Power BI** — Open `dashboard/AssetAnalysis.pbix` and point the data source to your populated SQL Server warehouse.
