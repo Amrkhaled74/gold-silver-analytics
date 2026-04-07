@@ -143,7 +143,7 @@ The analytical layer is delivered as an interactive **Power BI dashboard** title
 
 ### Dashboard Screenshot
 
-![Power BI Dashboard](./Dashboard/GOLD PERFORMANCE.jpg)
+![Power BI Dashboard](./Dashboard/GOLD_PERFORMANCE.jpg)
 
 > *Filtered view: Gold performance, Q1 2022, Month 2. Toggle between GOLD and SILVER assets using the top-right selector.*
 
